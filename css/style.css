@@ -1,0 +1,426 @@
+  * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+  }
+
+  /*============== navbar  ==============*/
+  .sidebar a {
+      color: rgb(0, 0, 0);
+  }
+
+  .sidebar a.active {
+      color: #ffffff;
+      background-color: #003E8A;
+  }
+
+  .sidebar .sidebar-brand {
+      background-color: rgba(70, 151, 44, 1);
+  }
+
+
+
+  /* @media (max-width: 767px) {
+    .navbar-nav.sidebar.accordion {
+      width: 100%;
+      left: 0;
+      margin-left: 0;
+      position: fixed;
+      z-index: 9999;
+      height: 100%;
+      overflow-y: auto;
+      transition: all 0.3s;
+      transform: translateX(20%);
+      background-color: white;
+    }
+  
+    .navbar-nav.sidebar.accordion.show {
+      transform: translateX(0);
+    }
+  
+    .navbar-nav.sidebar.accordion .sidebar-brand {
+      text-align: center;
+      width: 100%;
+      padding: 20px 10px;
+    }
+  } */
+
+
+  /*============== Welcome ==============*/
+  .welcome {
+      height: 150px;
+      background: linear-gradient(0deg, rgba(70, 151, 44, 1) 0%, rgba(4, 60, 139, 1) 77%);
+      box-shadow: 0px 9px 28px rgba(23, 23, 68, 0.04);
+      border-radius: 4px;
+  }
+
+  .welcome .wel-text-box {
+      padding: 20px;
+  }
+
+  .welcome .welcome-back {
+      font-weight: 900;
+      font-size: 20px;
+      line-height: 24px;
+      text-transform: uppercase;
+      color: #FFFFFF;
+  }
+
+  .welcome .welcome-text {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 22px;
+      color: #FFFFFF;
+      height: 88px;
+      left: 4.23%;
+      right: 38.36%;
+  }
+
+  /* .course-card:hover {
+      color: white !important;
+  } */
+
+  /* ==================add new coruse============== */
+
+  /* .active {
+      background-color: none;
+  } */
+
+  .input {
+      background-color: #ECECEC;
+      outline: none;
+      border: none;
+      border-radius: 5px;
+      padding-left: 10px;
+
+
+  }
+
+
+  .font {
+      font-weight: bold;
+      color: black;
+
+  }
+
+  .stu {
+      margin-right: 40px;
+  }
+
+  .mein-card {
+      height: 100%;
+      border-radius: 20px;
+
+  }
+
+  .save {
+      color: white;
+      background-color: #46972C;
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+      width: 28%;
+      border: none;
+      height: 43px;
+      line-height: 13px;
+      border-radius: 8px;
+      margin-top: 30px;
+      margin-left: 60%;
+  }
+
+  .font-inter {
+      color: black;
+      font-weight: 600;
+      font-size: 20px;
+      line-height: 24px;
+      padding-top: 40px;
+  }
+
+  .export {
+      margin-right: 20px;
+  }
+
+  .export-btn {
+      background: #41946D;
+      border: 1px solid #D0D5DD;
+      border-radius: 8px;
+      padding: 10px;
+      color: white;
+
+  }
+
+  .edit {
+      padding: 8px;
+      background-color: #3A87C5;
+      color: white;
+
+  }
+
+
+  .btn-edit-delete {
+      margin-left: 25%;
+
+  }
+
+  .delete {
+      padding: 10px;
+      background-color: #CB4F2C;
+      color: white;
+
+  }
+
+  .btn-edit-delete a {
+      text-decoration: none;
+      color: black;
+
+  }
+
+
+  table th {
+      position: sticky;
+      top: 0px;
+      /* padding-left: 40px; */
+      background: #FCFCFD;
+      border-bottom: 1px solid #EAECF0;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      font-size: 12px;
+      padding-left: 24px;
+  }
+
+
+
+  .text-input {
+      height: 20px;
+      width: 20px;
+  }
+
+
+  table td {
+      padding-right: 40px;
+      padding-top: 7px;
+      padding-bottom: 7px;
+      padding-left: 24px;
+      font-weight: 400;
+      font-size: 14px;
+  }
+
+  table tr:hover {
+      background-color: #ececec;
+  }
+
+  table tr {
+      border-bottom: 1px solid #EAECF0;
+
+  }
+
+  .fa-plus {
+      padding: 2px 4px 2px 4px;
+      border: 2px solid #0070FF;
+      border-radius: 6px;
+      font-size: 16px;
+      color: #0070FF;
+  }
+
+  .table-wrapper {
+      max-height: 88vh;
+      overflow-y: auto scroll;
+      max-width: 100%;
+      overflow-x: scroll;
+      text-align: start;
+      padding-right: 24px;
+
+  }
+
+  table {
+      min-width: max-content;
+  }
+
+
+  /* Set the width and height of the scrollbar */
+  .table-wrapper::-webkit-scrollbar {
+      width: 5px;
+      height: 2px;
+  }
+
+  /* Track */
+  .table-wrapper::-webkit-scrollbar-track {
+      background-color: transparent;
+
+  }
+
+  /* Handle */
+  .table-wrapper::-webkit-scrollbar-thumb {
+      background-color: #c5c2c2;
+      border-radius: 20px;
+  }
+
+  /* Handle on hover */
+  .table-wrapper::-webkit-scrollbar-thumb:hover {
+      background-color: #dddddd;
+  }
+
+  /* ===============body scroll bar style============ */
+
+  /* Set the width and height of the scrollbar */
+  body::-webkit-scrollbar {
+      width: 7px;
+      /* height: 2px; */
+  }
+
+  /* Track */
+  body::-webkit-scrollbar-track {
+      background-color: transparent;
+
+  }
+
+  /* Handle */
+  body::-webkit-scrollbar-thumb {
+      background-color: #c5c2c2;
+      border-radius: 20px;
+  }
+
+  /* Handle on hover */
+  body::-webkit-scrollbar-thumb:hover {
+      background-color: #dddddd;
+  }
+
+  /* ================telephone input=========== */
+  .telephone {
+      width: 100%;
+      /* padding: 9px 100px 9px 50px !important; */
+      background-color: #ECECEC;
+      outline: none;
+      border: none;
+      border-radius: 5px;
+
+  }
+
+  .btn-edit-delete1 {
+      text-align: end;
+  }
+
+  .paid {
+      color: #14BA6D;
+      background-color: #ECFDF3;
+      border-radius: 16px;
+      padding: 0px 8px 3px 6px;
+      width: 60px;
+      height: 22px
+  }
+
+  .paid-step {
+      margin-left: -6px;
+  }
+
+  .un-paid {
+      color: #364254;
+      background-color: #F2F4F7;
+      ;
+      border-radius: 16px;
+      padding: 0px 8px 3px 6px;
+      width: 80px;
+      font-weight: 500;
+
+      height: 22px
+  }
+
+  .unpaid-step {
+      margin-left: -6px;
+  }
+
+  .active {
+      background-color: #003E8A;
+      color: white !important;
+  }
+
+
+  /* =============form veldeitionsytle============ */
+  .font {
+      font-size: 13px;
+      text-transform: capitalize;
+
+  }
+
+  /* =====================mobile reponsive============== */
+  @media only screen and (min-width: 0px) and (max-width: 375px) {
+
+      /* =================edit. export. delet. btn step============== */
+      .delete {
+          margin-left: auto;
+      }
+
+      .export {
+          margin-right: 10px;
+      }
+
+      .course-card {
+          margin-bottom: 30px;
+      }
+
+  }
+
+  /* =====================mobile reponsive============== */
+  @media only screen and (min-width: 375px) and (max-width: 425px) {
+
+      /* ====================telephobe input=========== */
+      .telephone {
+          width: 99.5%;
+          margin-right: 200px !important;
+      }
+
+      .course-card {
+          margin-bottom: 30px;
+      }
+
+  }
+
+  @media only screen and (min-width: 426px) and (max-width: 768px) {
+
+      /* ====================telephobe input=========== */
+      .telephone {
+          width: 100%;
+          margin-right: 345px !important;
+
+      }
+
+      .course-card {
+          margin-bottom: 30px;
+      }
+  }
+
+  @media only screen and (min-width: 769px) and (max-width: 992px) {
+
+      /* ====================telephobe input=========== */
+      .telephone {
+          width: 100%;
+          margin-right: 469px !important;
+      }
+  }
+
+  @media only screen and (min-width: 1024px) and (max-width: 1440px) {
+
+      /* ====================telephobe input=========== */
+      .telephone {
+          width: 100%;
+          margin-right: 100px !important;
+
+      }
+  }
+
+  @media only screen and (min-width: 1441px) and (max-width: 1960px) {
+
+      /* ====================telephobe input=========== */
+      .telephone {
+          width: 100%;
+          padding-left: 150px;
+      }
+  }
+
+  @media only screen and (min-width: 1441px) and (max-width: 2560px) {
+
+      /* ====================telephobe input=========== */
+      .telephone {
+          width: 100% !important;
+          margin-right: 446px !important;
+      }
+  }
