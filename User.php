@@ -224,27 +224,30 @@ if (isset($_POST['delete_btn'])) {
                                         </div> -->
 
                                         <div class="in py-3">
-                                            <input type="text" name="name" id="name" class=" input w-100 py-2" placeholder="Full Name">
+                                            <input type="text" name="name" id="name" class=" input w-100 py-2" placeholder="Full Name" required>
                                         </div>
 
                                         <div class="in">
-                                            <input type="text" name="cnic" id="cnic" class=" input w-100 py-2" placeholder="CNIC">
+                                            <input type="text" name="cnic" id="cnic" class=" input w-100 py-2" placeholder="CNIC" required>
                                         </div>
 
-                                        <div class="py-3 ">
-                                            <input type="tel" name="phone" class="telephone text-dark  py-2" id="phone">
+                                        <div class="py-3">
+                                            <input type="text" name="phone" id="phone" class="input w-100 py-2" placeholder="Phone Number" required>
                                         </div>
+                                        <!-- <div class="py-3 ">
+                                            <input type="tel" name="phone" class="telephone text-dark  py-2" id="phone">
+                                        </div> -->
 
                                         <!-- <div class="py-3 ">
                                             <input type="tel" name="phone" class="telephone text-dark  py-2" id="phone">
                                         </div> -->
 
                                         <div class="in pb-3">
-                                            <input type="email" name="email" id="email" class=" input w-100 py-2 " placeholder="Email">
+                                            <input type="email" name="email" id="email" class=" input w-100 py-2 " placeholder="Email" required>
                                         </div>
 
                                         <div class="in">
-                                            <input type="text" name="location" id="location" class="  input w-100 py-2" placeholder="Location (Optional)">
+                                            <input type="text" name="location" id="location" class="  input w-100 py-2" placeholder="Location (Optional)" required>
                                         </div>
 
                                         <button type="submit" name="submit" class="save py-2">Save</button>
