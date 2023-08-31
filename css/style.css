@@ -338,8 +338,47 @@
   .font {
       font-size: 13px;
       text-transform: capitalize;
-
   }
+
+
+
+
+
+
+
+  /* input Design */
+  .inputDesign {
+      padding: 10px;
+      border: 2px solid #ccc;
+      border-radius: 7px;
+      font-size: 16px;
+      outline: none;
+  }
+
+  .inputDesign:focus {
+      border-color: #0055b8;
+      animation: inputFocusAnimation 0.3s;
+  }
+
+  @keyframes inputFocusAnimation {
+      0% {
+          transform: scale(1);
+      }
+
+      50% {
+          transform: scale(1.05);
+      }
+
+      100% {
+          transform: scale(1);
+      }
+  }
+
+
+
+
+
+
 
   /* =====================mobile reponsive============== */
   @media only screen and (min-width: 0px) and (max-width: 375px) {

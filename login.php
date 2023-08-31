@@ -6,6 +6,7 @@ if (isset($_POST['submit'])) {
     $name = $_POST['name'];
     $cinc = $_POST['cnic'];
     $email = $_POST['email'];
+    
     $select = "SELECT * FROM user WHERE email='$email' ";
     $email_pass = mysqli_query($conn, $select);
     $email_num_row = mysqli_num_rows($email_pass);
@@ -21,10 +22,8 @@ if (isset($_POST['submit'])) {
             echo "name incropt";
         }
     } else {
-        echo "cnic incropt";
+        echo "email envalid";
     }
-} else {
-    echo "email envalid";
 }
 
 ?>
@@ -53,13 +52,42 @@ if (isset($_POST['submit'])) {
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="./css/style.css">
 
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 
 </head>
+<style>
+    .inputDesign {
+        padding: 10px;
+        border: 2px solid #ccc;
+        border-radius: 7px;
+        font-size: 16px;
+        outline: none;
+    }
+
+    .inputDesign:focus {
+        border-color: #0055b8;
+        animation: inputFocusAnimation 0.3s;
+    }
+
+    @keyframes inputFocusAnimation {
+        0% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1.05);
+        }
+
+        100% {
+            transform: scale(1);
+        }
+    }
+</style>
+
 
 <body id="page-top">
 
@@ -86,15 +114,15 @@ if (isset($_POST['submit'])) {
                                         </div> -->
 
                                         <div class="in py-3">
-                                            <input type="text" name="name" id="name" class=" input w-100 py-2" placeholder="Full Name">
+                                            <input type="text" name="name" id="name" class=" inputDesign w-100 py-2" placeholder="Full Name">
                                         </div>
 
                                         <div class="in ">
-                                            <input type="text" name="cnic" id="cnic" class=" input w-100 py-2" placeholder="CNIC">
+                                            <input type="text" name="cnic" id="cnic" class=" inputDesign w-100 py-2" placeholder="CNIC">
                                         </div>
 
                                         <div class="in py-3">
-                                            <input type="email" name="email" id="email" class=" input w-100 py-2" placeholder="Email">
+                                            <input type="email" name="email" id="email" class=" inputDesign w-100 py-2" placeholder="Email">
                                         </div>
 
                                         <button type="submit" name="submit" class="save py-2">Login</button>

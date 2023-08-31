@@ -14,26 +14,29 @@ if (isset($_POST['submit'])) {
     $institute_name = mysqli_real_escape_string($conn, $_POST['institute_name']);
     $institute_location = mysqli_real_escape_string($conn, $_POST['institute_location']);
 
-    $institute_check = "SELECT * FROM `institute` WHERE institute_name = '$institute_name' ";
-
-    $institue_result = mysqli_query($conn, $institute_check);
-
-    $check_institute = mysqli_num_rows($institue_result);
-
-    if ($check_institute > 0) {
-        $institute_error = true;
+    if (empty($_POST['institute_name'])) {
+        $empty_name = true;
+    }
+    if (empty($_POST['institute_location'])) {
+        $empty_location = true;
     } else {
-        if (empty($_POST['institute_name'])) {
-            $empty_name = true;
-        } elseif (empty($_POST['institute_location'])) {
-            $empty_location = true;
+        $institute_check = "SELECT * FROM `institute` WHERE `institute_name` = '$institute_name'";
+
+        $institue_result = mysqli_query($conn, $institute_check);
+
+        $check_institute = mysqli_fetch_row($institue_result);
+
+        if ($check_institute > 0) {
+            $institute_error = true;
         } else {
+
             $insert_data = "INSERT INTO `institute`(`institute_name`, `institute_location`, `create_date`) 
             VALUES ('$institute_name', '$institute_location', NOW())";
 
             $sql = mysqli_query($conn, $insert_data);
             if ($sql) {
                 $insert = true;
+                $institute_name = '';
             } else {
                 echo '
                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -66,6 +69,25 @@ if (isset($_POST['delete_btn'])) {
             $_SESSION['Delete'] = "Data Delete Successfully!";
         } else {
             $_SESSION['Delete'] = "Failed to delete data!";
+        }
+    }
+}
+?>
+
+
+<!--  ===============Edit qurey===============  -->
+<?php
+if (isset($_POST['edit'])) {
+    if (!isset($_POST['chack_btn_delete']) || empty($_POST['chack_btn_delete'])) {
+        $_SESSION['Delete'] = "Please check the checkboxes to delete";
+        // You might want to redirect back to the previous page or handle this case accordingly.
+    } else {
+        if (count($_POST['chack_btn_delete']) == 1 && is_array($_POST['chack_btn_delete'])) {
+
+            echo '<script>alert("Edit success");</script>';
+        } else {
+            $_SESSION['Delete'] = "Please check only one checkbox!";
+            // echo '<script>alert("Please check only one checkbox!");</script>';
         }
     }
 }
@@ -187,15 +209,19 @@ if (isset($_POST['delete_btn'])) {
                                 <h3 class=" font-inter text-center">Add New Institute</h3>
                                 <div class="container-fluid">
                                     <form action="" method="post" onsubmit="return insForm()">
-                                        <div class="in py-3">
-                                            <input type="text" name="institute_name" id="insName" class=" input w-100 py-2" placeholder="Institute Name">
+                                        <div class="py-3">
+                                            <input type="text" name="institute_name" id="insName" class=" input w-100 py-2" placeholder="Institute Name" value="<?php if (isset($_POST['submit'])) {
+                                                                                                                                                                    echo $institute_name;
+                                                                                                                                                                } ?>">
                                             <span id="InstituteForm" name="InstituteForm" class="text-danger font"><?php if ($empty_name) {
                                                                                                                         echo "** Please Fill The institue Name";
                                                                                                                     } ?></span>
                                         </div>
 
                                         <div class="in">
-                                            <input type="text" name="institute_location" class=" input w-100 py-2" placeholder="Institute Location" id="insLo">
+                                            <input type="text" name="institute_location" class=" input w-100 py-2" placeholder="Institute Location" id="insLo" value="<?php if (isset($_POST['submit'])) {
+                                                                                                                                                                            echo $institute_location;
+                                                                                                                                                                        } ?>">
                                             <span id="InsLocation" class="text-danger font"><?php if ($empty_location) {
                                                                                                 echo "** Please Fill The Institute Location";
                                                                                             } ?></span>
@@ -223,10 +249,16 @@ if (isset($_POST['delete_btn'])) {
                                                     <span class="fa-regular fa-trash-can ">
                                                         <span>Delete</span></span>
                                                 </button>
-                                                <a href=""> <span class="edit export-btn">Edit</span></a>
-                                                <a href="">
+                                                <button type="submit" class="edit export-btn" name="edit">
+                                                    <span class="fa-solid fa-pen-to-square">
+                                                        <span>Edit</span>
+                                                    </span>
+                                                </button>
+                                                <a href="./export_institute.php">
                                                     <span class="fa-solid fa-cloud-arrow-down export export-btn">
-                                                        <span>Export</span></span></a>
+                                                        <span>Export</span>
+                                                    </span>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>

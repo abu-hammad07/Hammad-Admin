@@ -8,32 +8,49 @@ $insert = false;
 $sectionID_error = false;
 $cnic_error = false;
 $phone_error = false;
+$empty_sectionID = false;
+$empty_sectionName = false;
+$empty_sectionTrade = false;
+
 if (isset($_POST['submit'])) {
     $sectionID = mysqli_real_escape_string($conn, $_POST['sectionID']);
     $sectionName = mysqli_real_escape_string($conn,  $_POST['sectionName']);
     $sectionTrade = mysqli_real_escape_string($conn,  $_POST['sectionTrade']);
 
-    $sectionID_chacke = "SELECT * FROM section WHERE sectionID='$sectionID'";
-
-    $sectionID_result = mysqli_query($conn, $sectionID_chacke);
-
-    $check_sectionID = mysqli_num_rows($sectionID_result);
-    if ($check_sectionID > 0) {
-        $sectionID_error = true;
+    if (empty($_POST['sectionID'])) {
+        $empty_sectionID = true;
+    }
+    if (empty($_POST['sectionName'])) {
+        $empty_sectionName = true;
+    }
+    if (empty($_POST['sectionTrade'])) {
+        $empty_sectionTrade = true;
     } else {
-        $isert_data = "INSERT INTO section (`sectionID` , `sectionName` , `sectionTrade` , `create_date` ) 
+
+        $sectionID_chacke = "SELECT * FROM section WHERE sectionID='$sectionID'";
+
+        $sectionID_result = mysqli_query($conn, $sectionID_chacke);
+
+        $check_sectionID = mysqli_num_rows($sectionID_result);
+        if ($check_sectionID > 0) {
+            $sectionID_error = true;
+        } else {
+            $isert_data = "INSERT INTO section (`sectionID` , `sectionName` , `sectionTrade` , `create_date` ) 
                 VALUES ('$sectionID' , '$sectionName', '$sectionTrade', NOW())";
 
 
-        $sql = mysqli_query($conn, $isert_data);
-        if ($sql) {
-            $insert = true;
-        } else {
-            echo '
+            $sql = mysqli_query($conn, $isert_data);
+            if ($sql) {
+                $insert = true;
+                $sectionID = '';
+                $sectionName = '';
+            } else {
+                echo '
                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
                     <strong>not insert your data </strong>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>';
+            }
         }
     }
 }
@@ -176,19 +193,32 @@ if (isset($_POST['delete_btn'])) {
                                 <div class="container-fluid">
                                     <form action="" method="POST">
                                         <div class="in py-3">
-                                            <input type="text" name="sectionID" class=" input w-100 py-2" required placeholder="Section ID">
+                                            <input type="text" name="sectionID" class=" input w-100 py-2" placeholder="Section ID" value="<?php if (isset($_POST['sectionID'])) {
+                                                                                                                                                echo $sectionID;
+                                                                                                                                            } ?>">
+                                            <span id="InsLocation" class="text-danger font"><?php if ($empty_sectionID) {
+                                                                                                echo "** Please Fill The Section ID";
+                                                                                            } ?></span>
                                         </div>
 
                                         <div class="in">
-                                            <input type="text" name="sectionName" class=" input w-100 py-2" required placeholder="Section Name">
+                                            <input type="text" name="sectionName" class=" input w-100 py-2" placeholder="Section Name" value="<?php if (isset($_POST['sectionName'])) {
+                                                                                                                                                    echo $sectionName;
+                                                                                                                                                } ?>">
+                                            <span id="InsLocation" class="text-danger font"><?php if ($empty_sectionName) {
+                                                                                                echo "** Please Fill The Section Name";
+                                                                                            } ?></span>
                                         </div>
 
-                                        <select name="sectionTrade" id="" class="input  py-2 mt-3 w-100" required>
+                                        <select name="sectionTrade" id="" class="input  py-2 mt-3 w-100">
                                             <option value=""> Section Trade</option>
                                             <option value="Web Development"> Web Development</option>
                                             <option value="Grahpihp"> Grahpihp</option>
                                             <option value=" Digital Markiting"> Digital Markiting</option>
                                         </select>
+                                        <span id="InsLocation" class="text-danger font"><?php if ($empty_sectionTrade) {
+                                                                                            echo "** Please Fill The Section Trade";
+                                                                                        } ?></span>
 
 
 

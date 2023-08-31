@@ -7,6 +7,12 @@ if (!isset($_SESSION['name'])) {
 }
 $CourseID_error = false;
 $insert = false;
+$empty_CourseID = false;
+$empty_CourseName = false;
+$empty_CourseType = false;
+$empty_OfferBy = false;
+$empty_FeePermonth = false;
+$empty_Duration = false;
 
 if (isset($_POST['submit'])) {
     $CourseID = mysqli_real_escape_string($conn, $_POST['CourseID']);
@@ -16,29 +22,55 @@ if (isset($_POST['submit'])) {
     $FeePermonth = mysqli_real_escape_string($conn, $_POST['FeePermonth']);
     $Duration = mysqli_real_escape_string($conn, $_POST['Duration']);
 
-    $CourseID_check = "SELECT * FROM `courses` WHERE CourseID = '$CourseID' ";
-
-    $CourseID_result = mysqli_query($conn, $CourseID_check);
-
-    $check_CourseID = mysqli_num_rows($CourseID_result);
-
-    if ($check_CourseID > 0) {
-        $CourseID_error = true;
+    if (empty($_POST['CourseID'])) {
+        $empty_CourseID = true;
+    }
+    if (empty($_POST['CourseName'])) {
+        $empty_CourseName = true;
+    }
+    if (empty($_POST['CourseType'])) {
+        $empty_CourseType = true;
+    }
+    if (empty($_POST['OfferBy'])) {
+        $empty_OfferBy = true;
+    }
+    if (empty($_POST['FeePermonth'])) {
+        $empty_FeePermonth = true;
+    }
+    if (empty($_POST['Duration'])) {
+        $empty_Duration = true;
     } else {
 
-        $sql = "INSERT INTO `courses`(`CourseID`, `CourseName`, `CourseType`, `OfferBy`, `FeePermonth`, `Duration`, `create_date`)
+        $CourseID_check = "SELECT * FROM `courses` WHERE CourseID = '$CourseID' ";
+
+        $CourseID_result = mysqli_query($conn, $CourseID_check);
+
+        $check_CourseID = mysqli_fetch_row($CourseID_result);
+
+        if ($check_CourseID > 0) {
+            $CourseID_error = true;
+        } else {
+
+            $sql = "INSERT INTO `courses`(`CourseID`, `CourseName`, `CourseType`, `OfferBy`, `FeePermonth`, `Duration`, `create_date`)
             VALUES ('$CourseID', '$CourseName', '$CourseType', '$OfferBy', '$FeePermonth', '$Duration', NOW())";
 
-        $result = mysqli_query($conn, $sql);
+            $result = mysqli_query($conn, $sql);
 
-        if ($result) {
-            $insert = true;
-        } else {
-            echo '
+            if ($result) {
+                $insert = true;
+                $CourseID = '';
+                $CourseName = '';
+                $CourseType = '';
+                $OfferBy = '';
+                $FeePermonth = '';
+                $Duration = '';
+            } else {
+                echo '
                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
                     <strong>not Insert your data </strong>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>';
+            }
         }
     }
 }
@@ -179,38 +211,64 @@ if (isset($_POST['delete_btn'])) {
 
                     <div class="row">
                         <div class="col-lg-4 course-card ">
-                            <div class="card text-center mein-card pb-5 ">
+                            <div class="card mein-card pb-5 ">
                                 <h3 class=" font-inter">Add New Course</h3>
                                 <div class="container-fluid">
                                     <form action="" method="POST">
                                         <div class="in py-3">
-                                            <input type="text" name="CourseID" class=" input w-100 py-2" required placeholder="Course ID">
+                                            <input type="text" name="CourseID" class=" input w-100 py-2" placeholder="Course ID" value="<?php if (isset($_POST['submit'])) {
+                                                                                                                                            echo $CourseID;
+                                                                                                                                        } ?>">
+                                            <span id="InsLocation" class="text-danger font"><?php if ($empty_CourseID) {
+                                                                                                echo "** Please Fill The Course ID";
+                                                                                            } ?></span>
                                         </div>
 
                                         <div class="in">
-                                            <input type="text" name="CourseName" class=" input w-100 py-2" required placeholder="Course Name">
+                                            <input type="text" name="CourseName" class=" input w-100 py-2" placeholder="Course Name" value="<?php if (isset($_POST['submit'])) {
+                                                                                                                                                echo $CourseName;
+                                                                                                                                            } ?>">
+                                            <span id="InsLocation" class="text-danger font"><?php if ($empty_CourseName) {
+                                                                                                echo "** Please Fill The Course Name";
+                                                                                            } ?></span>
                                         </div>
 
-                                        <select name="CourseType" id="" class="input  py-2 mt-3 w-100" required>
+                                        <select name="CourseType" id="" class="input  py-2 mt-3 w-100">
                                             <option value=""> Course type</option>
                                             <option value="Web Development"> Web Development</option>
                                             <option value="Grahpihp"> Grahpihp</option>
                                             <option value=" Digital Markiting"> Digital Markiting</option>
                                         </select>
+                                        <span id="InsLocation" class="text-danger font"><?php if ($empty_CourseType) {
+                                                                                            echo "** Please Fill The Course Type";
+                                                                                        } ?></span>
 
-                                        <select name="OfferBy" id="" class="input w-100 py-2 mt-3" required>
+                                        <select name="OfferBy" id="" class="input w-100 py-2 mt-3">
                                             <option value=""> Offer By</option>
                                             <option value="20%"> 20%</option>
                                             <option value="40%"> 40%</option>
                                             <option value="70%"> 70%</option>
                                         </select>
+                                        <span id="InsLocation" class="text-danger font"><?php if ($empty_OfferBy) {
+                                                                                            echo "** Please Fill The OfferBy";
+                                                                                        } ?></span>
 
                                         <div class="in py-3">
-                                            <input type="text" name="FeePermonth" class=" input w-100 py-2" placeholder="Fee Per Month" required>
+                                            <input type="text" name="FeePermonth" class=" input w-100 py-2" placeholder="Fee Per Month" value="<?php if (isset($_POST['submit'])) {
+                                                                                                                                                    echo $FeePermonth;
+                                                                                                                                                } ?>">
+                                            <span id="InsLocation" class="text-danger font"><?php if ($empty_FeePermonth) {
+                                                                                                echo "** Please Fill The Fee Per Month";
+                                                                                            } ?></span>
                                         </div>
 
                                         <div class="in">
-                                            <input type="text" name="Duration" class=" input w-100 py-2" placeholder="Duration " required>
+                                            <input type="text" name="Duration" class=" input w-100 py-2" placeholder="Duration" value="<?php if (isset($_POST['submit'])) {
+                                                                                                                                            echo $Duration;
+                                                                                                                                        } ?>">
+                                            <span id="InsLocation" class="text-danger font"><?php if ($empty_Duration) {
+                                                                                                echo "** Please Fill The Duration";
+                                                                                            } ?></span>
                                         </div>
 
                                         <input type="submit" name="submit" class="save py-2" value="save">

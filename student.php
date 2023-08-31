@@ -9,6 +9,11 @@ $insert = false;
 $CNIC_error = false;
 $email_error = false;
 $contact_error = false;
+$empty_fullName = false;
+$empty_fatherName = false;
+$empty_CNIC = false;
+$empty_email = false;
+$empty_contactNumber = false;
 
 if (isset($_POST['submit'])) {
     $fullName = mysqli_real_escape_string($conn, $_POST['fullName']);
@@ -17,46 +22,68 @@ if (isset($_POST['submit'])) {
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $contactNumber = mysqli_real_escape_string($conn, $_POST['contactNumber']);
 
-    $CNIC_check = "SELECT * FROM `newstudents` WHERE CNIC = '$CNIC' ";
-
-    $CNIC_result = mysqli_query($conn, $CNIC_check);
-
-    $check_CNIC = mysqli_num_rows($CNIC_result);
-
-    if ($check_CNIC > 0) {
-        $CNIC_error = true;
+    if (empty($_POST['fullName'])) {
+        $empty_fullName = true;
+    }
+    if (empty($_POST['fatherName'])) {
+        $empty_fatherName = true;
+    }
+    if (empty($_POST['CNIC'])) {
+        $empty_CNIC = true;
+    }
+    if (empty($_POST['email'])) {
+        $empty_email = true;
+    }
+    if (empty($_POST['contactNumber'])) {
+        $empty_contactNumber = true;
     } else {
-        $email_check = "SELECT * FROM `newstudents` WHERE email = '$email' ";
 
-        $email_result = mysqli_query($conn, $email_check);
+        $CNIC_check = "SELECT * FROM `newstudents` WHERE CNIC = '$CNIC' ";
 
-        $check_email = mysqli_num_rows($email_result);
+        $CNIC_result = mysqli_query($conn, $CNIC_check);
 
-        if ($check_email > 0) {
-            $email_error = true;
+        $check_CNIC = mysqli_num_rows($CNIC_result);
+
+        if ($check_CNIC > 0) {
+            $CNIC_error = true;
         } else {
-            $contact_check = "SELECT * FROM `newstudents` WHERE contactNumber = '$contactNumber' ";
+            $email_check = "SELECT * FROM `newstudents` WHERE email = '$email' ";
 
-            $contact_result = mysqli_query($conn, $contact_check);
+            $email_result = mysqli_query($conn, $email_check);
 
-            $check_contact = mysqli_num_rows($contact_result);
+            $check_email = mysqli_num_rows($email_result);
 
-            if ($check_contact > 0) {
-                $contact_error = true;
+            if ($check_email > 0) {
+                $email_error = true;
             } else {
-                $sql = "INSERT INTO `newstudents`(`fullName`, `fatherName`, `CNIC`, `email`, `contactNumber`, `create_date`)
+                $contact_check = "SELECT * FROM `newstudents` WHERE contactNumber = '$contactNumber' ";
+
+                $contact_result = mysqli_query($conn, $contact_check);
+
+                $check_contact = mysqli_num_rows($contact_result);
+
+                if ($check_contact > 0) {
+                    $contact_error = true;
+                } else {
+                    $sql = "INSERT INTO `newstudents`(`fullName`, `fatherName`, `CNIC`, `email`, `contactNumber`, `create_date`)
             VALUES ('$fullName', '$fatherName', '$CNIC', '$email', '$contactNumber', NOW())";
 
-                $result = mysqli_query($conn, $sql);
+                    $result = mysqli_query($conn, $sql);
 
-                if ($result) {
-                    $insert = true;
-                } else {
-                    echo '
+                    if ($result) {
+                        $insert = true;
+                        $fullName = '';
+                        $fatherName = '';
+                        $CNIC = '';
+                        $email = '';
+                        $contactNumber = '';
+                    } else {
+                        echo '
                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
                     <strong>not Insert your data </strong>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>';
+                    }
                 }
             }
         }
@@ -220,28 +247,53 @@ if (isset($_POST['delete_btn'])) {
 
                     <div class="row">
                         <div class="col-lg-4 course-card">
-                            <div class="card text-center mein-card mb-5">
+                            <div class="card mein-card mb-5">
                                 <h3 class=" font-inter py-4">Add New Student</h3>
                                 <div class="container-fluid">
                                     <form action="" method="POST">
                                         <div class="in">
-                                            <input type="text" class="input w-100 py-2" name="fullName" placeholder="Full Name">
+                                            <input type="text" class="input w-100 py-2" name="fullName" placeholder="Full Name" value="<?php if (isset($_POST['submit'])) {
+                                                                                                                                            echo $fullName;
+                                                                                                                                        } ?>">
+                                            <span id="InsLocation" class="text-danger font"><?php if ($empty_fullName) {
+                                                                                                echo "** Please Fill The Full Name";
+                                                                                            } ?></span>
                                         </div>
 
                                         <div class="in py-3">
-                                            <input type="text" class="input w-100 py-2" name="fatherName" placeholder="Father Name">
+                                            <input type="text" class="input w-100 py-2" name="fatherName" placeholder="Father Name" value="<?php if (isset($_POST['submit'])) {
+                                                                                                                                                echo $fatherName;
+                                                                                                                                            } ?>">
+                                            <span id="InsLocation" class="text-danger font"><?php if ($empty_fatherName) {
+                                                                                                echo "** Please Fill The Father Name";
+                                                                                            } ?></span>
                                         </div>
 
                                         <div class="in pb-3">
-                                            <input type="text" class="input w-100 py-2" name="CNIC" placeholder="CNIC">
+                                            <input type="text" class="input w-100 py-2" name="CNIC" placeholder="CNIC" value="<?php if (isset($_POST['submit'])) {
+                                                                                                                                    echo $CNIC;
+                                                                                                                                } ?>">
+                                            <span id="InsLocation" class="text-danger font"><?php if ($empty_CNIC) {
+                                                                                                echo "** Please Fill The CNIC";
+                                                                                            } ?></span>
                                         </div>
 
                                         <div class="in pb-3">
-                                            <input type="text" class="input w-100 py-2" name="email" placeholder="Email">
+                                            <input type="text" class="input w-100 py-2" name="email" placeholder="Email" value="<?php if (isset($_POST['submit'])) {
+                                                                                                                                    echo $email;
+                                                                                                                                } ?>">
+                                            <span id="InsLocation" class="text-danger font"><?php if ($empty_email) {
+                                                                                                echo "** Please Fill The Email";
+                                                                                            } ?></span>
                                         </div>
 
                                         <div class="in">
-                                            <input type="number" class="input w-100 py-2" name="contactNumber" id="phone" placeholder="Contact Number">
+                                            <input type="number" class="input w-100 py-2" name="contactNumber" placeholder="Contact Number" value="<?php if (isset($_POST['submit'])) {
+                                                                                                                                                        echo $contactNumber;
+                                                                                                                                                    } ?>">
+                                            <span id="InsLocation" class="text-danger font"><?php if ($empty_contactNumber) {
+                                                                                                echo "** Please Fill The Contact Number";
+                                                                                            } ?></span>
                                         </div>
 
                                         <!-- <div class="in">
